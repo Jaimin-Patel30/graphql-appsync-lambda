@@ -1,0 +1,25 @@
+type Post @model @auth(rules: [
+  {allow: owner, queries: null}
+]) {
+  id: ID!
+  title: String!
+  subject: String
+  comments: [Comment] @connection(name: "PostComment", sortField: "createdAt")
+}
+
+type Comment @model {
+  id: ID!
+  content: String!
+  createdAt: String
+  post: Post @connection(name: "PostComment", sortField: "createdAt")
+}
+
+type Event @model @key(name: "queryName", fields: [
+  "queryName",
+  "createdAt"
+], queryField: "itemsByDate") {
+  id: ID!
+  name: String!
+  createdAt: String!
+  queryName: String!
+}

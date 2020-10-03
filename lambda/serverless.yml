@@ -1,0 +1,21 @@
+service: wsapi
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: ap-southeast-1
+  iamRoleStatements:
+    - Action:
+      - lambda:InvokeFunction
+      - secretsmanager:GetSecretValue
+      - logs:CreateLogGroup
+      - logs:CreateLogStream
+      - logs:PutLogEvents
+      - states:StartExecution
+      Resource: "*" 
+      Effect: Allow
+functions:
+  index:
+    handler: function/index.handler
+    memorySize: 128
+    Timeout: 60
